@@ -1,0 +1,16 @@
+/* .thumbs>div{
+	width: 100%;
+} */
+div.my-gallery{
+	display: flex;
+	flex-wrap:wrap;
+}
+.thumbs figure{
+	margin: 10px;
+	box-shadow: 0 0 8px #999;
+	
+}
+.thumbs figure img{
+	height: 100px;
+	vertical-align: middle;
+}
