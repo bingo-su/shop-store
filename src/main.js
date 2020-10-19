@@ -1,5 +1,45 @@
 //入口文件
 import Vue from "vue";
+
+//配置vuex
+// 1.装包cnpm i vuex -S
+// 2.导入包
+import Vuex from "vuex"
+// 3.注册vuex到Vue中
+Vue.use(Vuex);
+// 4.new Vuex.Store()实例，得到一个数据仓储对象
+var store = new Vuex.Store({
+	state:{//可以把state 当作　data　存储数据
+		car:[]//把购物车中，商品的数据用数组保存起来，设置存储对象样式为：
+					//{id:商品的id ， count:要购买的数量 , price:商品的价格 , selected:false }
+	},
+	mutations:{/* 如果要操作state中的数据，推荐调用mutation中的方法，才能操作对应的数据，不推荐直接操作数据，容易造成数据紊乱,
+不能快速定位错误原因 */
+//注意：组件想要调用mutation 中的方法，只能通过this.$store.commit('方法名')
+		addToCar(state,goodsinfo){
+			//点击加入购物车，把商品信息保存到 store 的 car 中
+			//分析：
+			//1.如果购物车中，之前就已经有这个对应的商品了，那么，只需要更新数量
+			//2.如果没有，则把商品数据，push 到 car 中
+			var flag = false;
+			
+			state.car.some(item => {
+				if(item.id === goodsinfo.id){
+					item.count += parseInt(goodsinfo.count);
+					flag = true;
+					return true;
+				}
+			});
+			if(!flag){
+				state.car.push(goodsinfo);
+			}
+		}
+	},
+	getter:{
+		
+	}
+})
+
 import app from "./APP.vue";
 //全局导入css
 import "./lib/css/golbal.css";
@@ -45,9 +85,9 @@ Vue.http.options.root = "http://api.cms.liulongbin.top";
 //设置全局post 提交表单格式的组织形式
 Vue.http.options.emulateJSON = true;
 
-
 var vm = new Vue({
 	el:"#app",
 	render: c => c(app),
 	router,
+	store,
 });

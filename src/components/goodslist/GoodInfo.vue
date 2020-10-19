@@ -92,7 +92,6 @@
 			mui(".mui-numbox")
 			.numbox()
 			.setOption("max",this.goodsinfo.stock_quantity);
-			
 		},
 		methods:{
 			getLunbo(){//获取轮播图数据
@@ -119,8 +118,17 @@
 			getComment(id){
 				this.$router.push({name:"goodscomment",params:{id}});
 			},
-			switchBall(){
-				this.ballflag = !this.ballflag
+			switchBall(){//加入购物车
+				this.ballflag = !this.ballflag;
+				//{id:商品的id ， count:要购买的数量 , price:商品的价格 , selected:false }
+				var goodsinfo = {
+					id:this.id,
+					count:this.selectcount,
+					price:this.goodsinfo.sell_price,
+					selected:true,
+				}
+				//调用 store 中的 mutations 将商品加入购物车
+				this.$store.commit("addToCar",goodsinfo);
 			},
 			beforEnter(el){
 				el.style.transform = "translate(0,0)";
