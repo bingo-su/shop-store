@@ -123,7 +123,7 @@
 				//{id:商品的id ， count:要购买的数量 , price:商品的价格 , selected:false }
 				var goodsinfo = {
 					id:this.id,
-					count:this.selectcount,
+					count:parseInt(this.selectcount),
 					price:this.goodsinfo.sell_price,
 					selected:true,
 				}
